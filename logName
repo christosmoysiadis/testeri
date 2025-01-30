@@ -1,1 +1,15 @@
-log.warn("we have connection..... BIIIIIIIIIIITCH")
+def issue = get("/rest/api/2/issue/${issue.key}").asObject(Map).body
+def entwickler = issue.fields.customfield_XXX // First problem is this id here
+def entwicklerId = entwickler.accountId
+if(entwickler){
+    put("/rest/api/2/issue/${issueKey}")
+        .header('Content-Type', 'application/json')
+        .body([
+            fields: [
+                assignee: [
+                    id: entwicklerId
+                ]
+            ]
+        ])
+        .asObject(Map)
+}
