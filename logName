@@ -1,13 +1,18 @@
 def issue = get("/rest/api/2/issue/${issue.key}").asObject(Map).body
-def entwickler = issue.fields.customfield_XXX // First problem is this id here
-def entwicklerId = entwickler.accountId
+def issueKey = issue.key
+
+//def entwickler = issue.fields.customfield_10128 // First problem is this id here
+//def entwicklerId = entwickler.accountId
+
+def reporterId = issue.fields.reporter.accountId
+
 if(entwickler){
     put("/rest/api/2/issue/${issueKey}")
         .header('Content-Type', 'application/json')
         .body([
             fields: [
                 assignee: [
-                    id: entwicklerId
+                    id: reporterId
                 ]
             ]
         ])
